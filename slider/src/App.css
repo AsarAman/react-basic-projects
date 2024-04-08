@@ -1,0 +1,22 @@
+.App {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.btns {
+  display: flex;
+  gap: 15px;
+}
+.btns button {
+  padding: 8px 16px;
+}
+
+.content h2{
+  font-size: 25px;
+  color: blue;
+  font-weight: 900;
+}

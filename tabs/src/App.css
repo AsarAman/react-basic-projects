@@ -1,0 +1,25 @@
+.App {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+.btns{
+  display: flex;
+  gap: 15px;
+
+}
+.btn{
+  padding: 10px 15px;
+  outline: none;
+  
+
+
+}
+.active-btn{
+  background-color: blue;
+  color: white;
+}
+
