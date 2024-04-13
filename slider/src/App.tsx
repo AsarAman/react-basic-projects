@@ -10,6 +10,8 @@ type SlideType = {
 function App() {
   const [index, setIndex] = useState<number>(0);
 
+
+  //slides data
   const sliderData: SlideType[] = [
     {
       title: "Slider 1",
@@ -25,8 +27,11 @@ function App() {
     },
   ];
 
+  //currently active slide
+
   const activeSlide = sliderData[index];
 
+  //going to next slide
   const nextSlide = () => {
     if (index >= sliderData.length - 1) {
       return setIndex(0);
@@ -35,6 +40,7 @@ function App() {
     }
   };
 
+  //going to prevslide
   const prevslide = () => {
     if (index < 1) {
       setIndex(sliderData.length - 1);
