@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
   PropsWithChildren,
   createContext,
@@ -5,18 +6,20 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { appData } from "./data";
 
 type ItemType = {
   id: string;
   title: string;
   price: string;
   img: string;
-  amount: string;
+  amount: number;
 };
+
 type DataType = {
   data: ItemType[];
   cartItems: ItemType[];
-  fetchItems: () => void;
+
   addToCart: (item: ItemType) => void;
   clearCart: () => void;
   totalItems: number;
@@ -24,9 +27,9 @@ type DataType = {
   deleteFromCart: (id: string) => void;
 };
 const AppContext = createContext<DataType>({
-  data: [],
+  data: appData,
   cartItems: [],
-  fetchItems: () => {},
+
   addToCart: (item: ItemType) => {},
   clearCart: () => {},
   totalItems: 0,
@@ -35,35 +38,17 @@ const AppContext = createContext<DataType>({
 });
 
 export const CartProvider = ({ children }: PropsWithChildren) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<ItemType[]>(appData);
   const [cartItems, setCartItems] = useState<ItemType[]>([]);
-  const [totalItems, setTotalItems] = useState(0);
-  const [totalAmount, setTotalAmount] = useState(0);
-
-  // fetching data
-  const fetchItems = async () => {
-    try {
-      const response = await fetch(
-        "https://course-api.com/react-useReducer-cart-project"
-      );
-      const data = await response.json();
-      setData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
+  const [totalItems, setTotalItems] = useState<number>(0);
+  const [totalAmount, setTotalAmount] = useState<number>(0);
 
   //adding items to cart
   const addToCart = (item: ItemType) => {
     let itemIndex = cartItems.findIndex((cartItem) => cartItem.id === item.id);
     if (itemIndex !== -1) {
       //we found item
-     
+
       let updatedCartItems = [...cartItems];
       updatedCartItems[itemIndex].amount += 1;
       setCartItems(updatedCartItems);
@@ -83,9 +68,8 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
       (total, cartItem) => {
         const { price, amount } = cartItem;
 
-        total.totalProducts += Number(amount);
-        total.totalPrice += Number(price) * Number(amount);
-        
+        total.totalProducts += amount;
+        total.totalPrice += Number(price) * amount;
 
         return total;
       },
@@ -95,14 +79,13 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
     setTotalAmount(totalPrice);
   }, [cartItems]);
 
-
   //delete from cart
   const deleteFromCart = (id: string) => {
     let updatedCartItems: ItemType[] = cartItems
       .map((item) => {
         if (item.id === id) {
-          if (Number(item.amount) > 1) {
-            return { ...item, amount: Number(item.amount) - 1 };
+          if (item.amount > 1) {
+            return { ...item, amount: item.amount - 1 };
           } else {
             return null; // Remove item
           }
@@ -112,7 +95,6 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
       })
       .filter((item) => item !== null) as ItemType[];
 
-   
     setCartItems(updatedCartItems);
   };
 
@@ -121,7 +103,7 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
       value={{
         data,
         cartItems,
-        fetchItems,
+
         addToCart,
         clearCart,
         totalAmount,

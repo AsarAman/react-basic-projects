@@ -10,7 +10,7 @@ function Cart() {
       <h1>Your Bag</h1>
       <h2>You have {totalItems} in your bag</h2>
       <h3>Your sub total is: {totalAmount}</h3>
-      <div>
+      <div className="cart-items">
         {cartItems.map((item) => (
           <div className="item" key={item.id}>
             <div className="item-desc">

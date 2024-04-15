@@ -10,7 +10,7 @@ function Home() {
         <div className="cart-items">
 
           {data.map((item) => (
-            <div className="item" key={item.id}>
+            <div className="" key={item.id}>
               <div className="item-desc">
                 <img src={item.img} alt="" />
                 <div className="item-info">
@@ -19,7 +19,7 @@ function Home() {
                 </div>
               </div>
               <div>
-                <button onClick={() => addToCart(item)}>add to cart</button>
+                <button onClick={() => addToCart(item)}>Add to Cart</button>
               </div>
               <div></div>
             </div>
